@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Carrito de compras</h1>
+    {{#if cart.products.length}}
+         {{#each cart.products}}
+            <h2>{{this.id.title}}</h2>
+            <h3>Cantidad: {{this.quantity}}</h3>
+            <hr/>
+        {{/each}}
+        {{else}}
+        <h2>Aun no has comprado nada</h2>
+    {{/if}}
+    <form action="/api/cart/{{user.cart}}/purchase" method="POST">
+        <input type="submit" value="confirmar carrito" />
+    </form>
+    <a href="/products">Volver</a>
+   
+
+
+</body>
+</html>

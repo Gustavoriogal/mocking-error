@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{product.title}}</h1>
+    <p>{{product.description}}</p>
+    <h3>Precio: ${{product.price}}</h3>
+    <h3>Stock disponible: {{product.stock}}</h3>
+    {{#if isUser}}
+        <form action="/api/cart/{{user.cart}}/products/{{product._id}}" method="POST">
+            <button type="submit">Comprar</button>
+        </form>
+        {{else}}
+        <button>Editar</button>
+        <button>Eliminar</button>
+    {{/if}}
+</body>
+</html>

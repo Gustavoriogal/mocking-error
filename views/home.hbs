@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Productos</title>
+</head>
+<body>
+
+    <a href="/chat">Chat Global</a>
+    <h1>Lista de Productos</h1>
+    <ul>
+        {{#each products }}
+            <div>
+                <h3>
+                    {{this.title}}
+                </h3>
+                <span>
+                    Precio: {{this.price}}
+                </span>
+                <p>{{this.description}}</p>
+                </div>
+                <a href="/products/{{this._id}}">Ver detalle</a>
+                {{!-- {{#if ../isUser}}
+                    <button>Comprar</button>
+                    {{else}}
+                    <button>Eliminar</button>
+                    <button>Editar</button>
+                {{/if}} --}}
+        {{/each}}
+        
+    </ul>
+    
+
+
+    {{#if pagination.hasPrevPage}}
+    <a href="{{pagination.prevLink}}">Página anterior</a>
+    {{/if}}
+
+    <span>Página {{pagination.page}} de {{pagination.totalPages}}</span>
+
+    {{#if pagination.hasNextPage}}
+        <a href="{{pagination.nextLink}}">Página siguiente</a>
+    {{/if}}
+
+</body>
+</html>

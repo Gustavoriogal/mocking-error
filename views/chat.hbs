@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat</title>
+</head>
+
+<body>
+    <h1>Chat</h1>
+    <div id="messages">
+        {{#if isAdmin}}
+        <h2>No puedes acceder al chat si eres admin</h2>
+        {{else}}
+
+        {{#each messages}}
+        <p><strong>{{this.user}}:</strong> {{this.message}}</p>
+        {{/each}}
+    </div>
+    <form id="message-form">
+        <input type="text" id="message-input" placeholder="Escribe un mensaje">
+        <button type="submit">Enviar</button>
+    </form>
+
+    {{/if}}
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8081');
+
+        socket.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.type === 'initialMessages') {
+                // Cargar mensajes existentes
+                data.messages.forEach((message) => {
+                    addMessage(message);
+                });
+            } else if (data.type === 'chatMessage') {
+                // Mostrar el mensaje en tiempo real
+                addMessage(data.message);
+            }
+        });
+
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+
+        messageForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const message = messageInput.value;
+            socket.send(JSON.stringify({ user: '{{user.first_name}}', message }));
+            messageInput.value = '';
+        });
+
+        function addMessage(message) {
+            console.log('hola')
+            const messagesDiv = document.getElementById('messages');
+            const messageElement = document.createElement('p');
+            messageElement.innerHTML = `<strong>${message.user}:</strong> ${message.message}`;
+            messagesDiv.appendChild(messageElement);
+        }
+    </script>
+</body>
+
+</html>
